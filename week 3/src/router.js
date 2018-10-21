@@ -71,4 +71,32 @@ router.post('/dogs', ctx => {
   ctx.body = dogs
 })
 
+router.del('/dogs/:id', ctx => {
+  const dog = dogs.find(item => item.id === Number(ctx.params.id))
+  if (!dog) {
+    ctx.status = 404
+
+    log.warn('No dog found')
+
+    return
+  }
+  dogs.splice(dogs.indexOf(dog), 1)
+  ctx.body = dogs
+})
+
+router.put('/dogs/:id', ctx => {
+  let dog = dogs.find(item => item.id === Number(ctx.params.id))
+  if (!dog) {
+    ctx.status = 404
+
+    log.warn('No dog found')
+
+    return
+  }
+  dogs.splice(dogs.indexOf(dog), 1)
+  dog = ctx.request.body
+  dogs.push(dog)
+  ctx.body = dogs
+})
+
 module.exports = router.routes()

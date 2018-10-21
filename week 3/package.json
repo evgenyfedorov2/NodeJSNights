@@ -10,7 +10,7 @@
     "dev": "nodemon src/index.js | pino-pretty"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "jsonschema": "^1.2.4",
     "kcors": "^2.2.2",

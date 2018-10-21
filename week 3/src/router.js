@@ -85,7 +85,7 @@ router.del('/dogs/:id', ctx => {
 })
 
 router.put('/dogs/:id', ctx => {
-  let dog = dogs.find(item => item.id === Number(ctx.params.id))
+  const dog = dogs.find(item => item.id === Number(ctx.params.id))
   if (!dog) {
     ctx.status = 404
 
@@ -93,9 +93,7 @@ router.put('/dogs/:id', ctx => {
 
     return
   }
-  dogs.splice(dogs.indexOf(dog), 1)
-  dog = ctx.request.body
-  dogs.push(dog)
+  dogs[dogs.indexOf(dog)] = ctx.request.body
   ctx.body = dogs
 })
 

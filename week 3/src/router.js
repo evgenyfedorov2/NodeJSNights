@@ -7,6 +7,32 @@ const log = require('./logger')
 
 const router = new Router()
 
+const schema = {
+  type: 'Object',
+  required: true,
+  properties: {
+    id: {
+      type: 'integer',
+      required: true,
+    },
+    name: {
+      type: 'string',
+      required: true,
+    },
+    breed: {
+      type: 'string',
+      required: true,
+    },
+    birthYear: {
+      type: 'number',
+    },
+    photo: {
+      type: 'string',
+      format: 'url',
+    },
+  },
+}
+
 router.get('/', ctx => {
   ctx.body = 'Hello world from Router'
 })
@@ -30,32 +56,6 @@ router.get('/dogs/:id', ctx => {
 })
 
 router.post('/dogs', ctx => {
-  const schema = {
-    type: 'Object',
-    required: true,
-    properties: {
-      id: {
-        type: 'integer',
-        required: true,
-      },
-      name: {
-        type: 'string',
-        required: true,
-      },
-      breed: {
-        type: 'string',
-        required: true,
-      },
-      birthYear: {
-        type: 'number',
-      },
-      photo: {
-        type: 'string',
-        format: 'url',
-      },
-    },
-  }
-
   const validation = validate(ctx.request.body, schema)
   if (!validation.valid) {
     ctx.status = 400
@@ -67,8 +67,7 @@ router.post('/dogs', ctx => {
   }
 
   dogs.push(ctx.request.body)
-
-  ctx.body = dogs
+  ctx.body = ctx.request.body
 })
 
 router.del('/dogs/:id', ctx => {
@@ -81,10 +80,19 @@ router.del('/dogs/:id', ctx => {
     return
   }
   dogs.splice(dogs.indexOf(dog), 1)
-  ctx.body = dogs
+  ctx.status = 204
 })
 
 router.put('/dogs/:id', ctx => {
+  const validation = validate(ctx.request.body, schema)
+  if (!validation.valid) {
+    ctx.status = 400
+    ctx.body = {
+      errors: validation.errors,
+    }
+
+    return
+  }
   const dog = dogs.find(item => item.id === Number(ctx.params.id))
   if (!dog) {
     ctx.status = 404
@@ -94,7 +102,7 @@ router.put('/dogs/:id', ctx => {
     return
   }
   dogs[dogs.indexOf(dog)] = ctx.request.body
-  ctx.body = dogs
+  ctx.body = ctx.request.body
 })
 
 module.exports = router.routes()

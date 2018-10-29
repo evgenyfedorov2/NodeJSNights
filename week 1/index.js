@@ -37,10 +37,10 @@ function promiseStyle () {
 async function asyncStyle () {
     const result = await request(BASE_URL);
     const vehicles = JSON.parse(result).vehicles;
-    vehicles.forEach(async (url) => {
+    await Promise.all(vehicles.map(async url => {
         const vehicle = await request(url);
         console.log(JSON.parse(vehicle).name);
-    });
+    }));
 }
 
 //callbackStyle()

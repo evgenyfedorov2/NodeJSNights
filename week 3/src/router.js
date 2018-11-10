@@ -62,12 +62,12 @@ router.post('/dogs', ctx => {
     ctx.body = {
       errors: validation.errors,
     }
-
     return
   }
 
   dogs.push(ctx.request.body)
   ctx.body = ctx.request.body
+  ctx.status = 204
 })
 
 router.del('/dogs/:id', ctx => {
@@ -90,7 +90,6 @@ router.put('/dogs/:id', ctx => {
     ctx.body = {
       errors: validation.errors,
     }
-
     return
   }
   const dog = dogs.find(item => item.id === Number(ctx.params.id))

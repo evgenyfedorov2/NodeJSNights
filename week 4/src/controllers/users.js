@@ -17,6 +17,17 @@ async function signUp(ctx) {
   ctx.body = user
 }
 
+async function signIn(ctx) {
+  const input = {
+    email: ctx.request.body.email,
+    password: ctx.request.body.password,
+  }
+
+  validate(schema.signIn, input)
+  ctx.body = await operations.signIn(input)
+}
+
 module.exports = {
   signUp,
+  signIn,
 }

@@ -30,6 +30,10 @@ module.exports = {
     return bcrypt.hash(peperify(password), 10)
   },
 
+  comparePasswords(plaintext, ciphertext) {
+    return bcrypt.compare(peperify(plaintext), ciphertext)
+  },
+
 }
 
 function peperify(password) {

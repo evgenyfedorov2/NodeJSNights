@@ -24,6 +24,28 @@ async function signUp(input) {
   return newUser
 }
 
+async function signIn(input) {
+  log.info({ input }, 'signIn start')
+
+  const user = await userRepository.findByEmail(input.email.toLowerCase())
+  if (!user) {
+    throw new errors.NotFoundError('User with this email not found')
+  }
+
+  const verified = await crypto.comparePasswords(input.password, user.password)
+  if (!verified || user.disabled) {
+    throw new errors.UnauthorizedError('Invalid Password')
+  }
+
+  const accessToken = await crypto.generateAccessToken(user.id)
+  log.info({ input }, 'signIn end')
+  return {
+    id: user.id,
+    email: user.email,
+    accessToken,
+  }
+}
+
 async function verifyTokenPayload(input) {
   log.info({ input }, 'verifyTokenPayload')
   const jwtPayload = await crypto.verifyAccessToken(input.jwtToken)
@@ -46,5 +68,6 @@ async function verifyTokenPayload(input) {
 
 module.exports = {
   signUp,
+  signIn,
   verifyTokenPayload,
 }

@@ -3,7 +3,6 @@
 const operations = require('../operations/users')
 const { validate } = require('../validations')
 const { jwtToken } = require('../validations/schemas/users')
-//const log = require('../utils/logger'
 
 async function authenticate(ctx, next) {
   if (!ctx) {

@@ -12,6 +12,7 @@ router.use(handleErrors)
 /* PUBLIC ROUTES */
 
 router.post('/users', users.signUp)
+router.post('/sessions/user', users.signIn)
 
 /* PRIVATE ROUTES */
 

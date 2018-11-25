@@ -22,3 +22,4 @@ jsconfig.json
 
 # Local configuration
 .env
+RemoveCRLF.ps1

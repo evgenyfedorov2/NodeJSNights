@@ -1,29 +1,60 @@
 'use strict'
 
-const R = require('ramda')
 const errors = require('../utils/errors')
-const users = require('./../database/users.json')
+const database = require('./../database')
 
-function findAll() {
-  return users
+async function findAll() {
+  const query = await database.query('select * from users')
+  return query.row.map(row => userFromRow(row))
 }
 
-function findById(id) {
-  const user = R.find(R.propEq('id', id), users)
-  if (!user) {
+async function findById(id) {
+  const query = await database.query('select * from users where id=$1', { id })
+  const row = query.rows[0]
+  if (!row) {
     throw new errors.NotFoundError()
   }
-  return user
+  return userFromRow(row)
 }
 
-function findByEmail(email) {
-  return R.find(R.propEq('email', email), users)
+async function findByEmail(email) {
+  const query = await database.query('select * from users where email=$1', { email })
+  const row = query.rows[0]
+  if (!row) {
+    throw new errors.NotFoundError()
+  }
+  return userFromRow(row)
 }
 
-function create(user) {
-  user.id = users.length + 1
-  users.push(user)
-  return user
+async function create(attributes) {
+  const insertInstruction = `
+  INSERT INTO users(email, name, password, disabled, created_at, updated_at)
+  VALUES ($1, $2, $3, $4, NOW(), NOW())
+  RETURNING *
+  `
+
+  const query = await database.query(
+    insertInstruction,
+    [
+      attributes.email,
+      attributes.name,
+      attributes.password,
+      attributes.disabled,
+    ],
+  )
+
+  return userFromRow(query.rows[0])
+}
+
+function userFromRow(row) {
+  return {
+    id: row.id,
+    name: row.name,
+    password: row.password,
+    disabled: row.disabled,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+  }
 }
 
 module.exports = {

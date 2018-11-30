@@ -1,60 +1,61 @@
 'use strict'
 
 const errors = require('../utils/errors')
-const database = require('./../database')
+const { User } = require('../database/models')
 
-async function findAll() {
-  const query = await database.query('select * from users')
-  return query.row.map(row => userFromRow(row))
+/**
+ * Returns all records
+ * @return {Promise<Array>}
+ */
+function findAll() {
+  return User.query()
 }
 
+/**
+ * Find user by id
+ * @param {Number} id User id
+ * @return {Promise<User>}
+ */
 async function findById(id) {
-  const query = await database.query('select * from users where id=$1', { id })
-  const row = query.rows[0]
-  if (!row) {
+  const user = await User.query()
+    .findById(id)
+
+  if (!user) {
     throw new errors.NotFoundError()
   }
-  return userFromRow(row)
+  return user
 }
 
+/**
+ * Find user by email
+ * @param {String} email User email
+ * @return {Promise<User>}
+ */
 async function findByEmail(email) {
-  const query = await database.query('select * from users where email=$1', { email })
-  const row = query.rows[0]
-  if (!row) {
+  const user = await User.query()
+    .where('email', email)
+    .first()
+
+  if (!user) {
     throw new errors.NotFoundError()
   }
-  return userFromRow(row)
+  return user
 }
 
+/**
+ * Create a user
+ * @param {Object} attributes User attributes
+ * @param {String} attributes.email User email
+ * @param {String} attributes.name User name
+ * @param {String} attributes.password User password
+ * @param {boolean} attributes.disabled User disabled flag
+ * @return {Promise<User>}
+ */
 async function create(attributes) {
-  const insertInstruction = `
-  INSERT INTO users(email, name, password, disabled, created_at, updated_at)
-  VALUES ($1, $2, $3, $4, NOW(), NOW())
-  RETURNING *
-  `
+  const user = await User.query()
+    .insertAndFetch(attributes)
 
-  const query = await database.query(
-    insertInstruction,
-    [
-      attributes.email,
-      attributes.name,
-      attributes.password,
-      attributes.disabled,
-    ],
-  )
-
-  return userFromRow(query.rows[0])
-}
-
-function userFromRow(row) {
-  return {
-    id: row.id,
-    name: row.name,
-    password: row.password,
-    disabled: row.disabled,
-    createdAt: row.createdAt,
-    updatedAt: row.updatedAt,
-  }
+  return user
 }
 
 module.exports = {

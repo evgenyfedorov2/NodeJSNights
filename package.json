@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "npx mocha --opts ./tests/mocha.opts ./tests",
+    "test:coverage": "npx nyc mocha --opts ./tests/mocha.opts ./tests",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js | pino-pretty",
     "lint": "eslint .",
@@ -47,6 +48,7 @@
     "koa-compress": "^3.0.0",
     "koa-router": "^7.4.0",
     "node-fetch": "^2.3.0",
+    "nyc": "^13.1.0",
     "objection": "^1.4.0",
     "pg": "^7.4.3",
     "pino": "^5.9.0",

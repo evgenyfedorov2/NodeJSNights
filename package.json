@@ -7,7 +7,7 @@
     "npm": "~6.4.0"
   },
   "scripts": {
-    "test": "NODE_ENV=test npx mocha --opts ./tests/mocha.opts ./tests",
+    "test": "npx mocha --opts ./tests/mocha.opts ./tests",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js | pino-pretty",
     "lint": "eslint .",
@@ -49,7 +49,8 @@
     "node-fetch": "^2.3.0",
     "objection": "^1.4.0",
     "pg": "^7.4.3",
-    "pino": "^5.8.0",
-    "ramda": "^0.25.0"
+    "pino": "^5.9.0",
+    "ramda": "^0.25.0",
+    "supertest-koa-agent": "^0.3.0"
   }
 }

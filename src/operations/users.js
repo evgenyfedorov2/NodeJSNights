@@ -30,7 +30,7 @@ async function signUp(input) {
     name: input.name,
     email: input.email.toLowerCase(),
     password: await crypto.hashPassword(input.password),
-    disabled: false,
+    disabled: input.disabled || false,
   }
 
   const existingUser = await userRepository.findByEmail(user.email)
@@ -53,7 +53,7 @@ async function verifyTokenPayload(input) {
   }
 
   const userId = parseInt(jwtPayload.userId)
-  const user = userRepository.findById(userId)
+  const user = await userRepository.findById(userId)
   if (!user || user.disabled) {
     throw new errors.UnauthorizedError()
   }

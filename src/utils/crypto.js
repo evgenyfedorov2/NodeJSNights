@@ -16,14 +16,13 @@ module.exports = {
   },
 
   verifyAccessToken(accessToken) {
-    try {
-      return jwtVerify(accessToken, config.auth.secret, config.auth.verifyOptions)
-    } catch (err) {
-      if (err instanceof jwt.JsonWebTokenError) {
-        return null
-      }
-      throw err
-    }
+    return jwtVerify(accessToken, config.auth.secret, config.auth.verifyOptions)
+      .catch(err => {
+        if (err instanceof jwt.JsonWebTokenError) {
+          return null
+        }
+        throw err
+      })
   },
 
   hashPassword(password) {

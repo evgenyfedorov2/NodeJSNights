@@ -4,7 +4,7 @@ const { Dog } = require('../database/models')
 
 /**
  * Returns all records
- * @returns {Promisse<Array>}
+ * @returns {Promise<Array>}
  */
 function findAll() {
   return Dog.query()

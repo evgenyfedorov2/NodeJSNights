@@ -16,8 +16,9 @@ function findAll() {
  * @return {Promise<User>}
  */
 function findById(id) {
-  return User.query()
-    .findById(id)
+  const user = User.query().where('id', id).first()
+
+  return user
 }
 
 /**
@@ -26,9 +27,11 @@ function findById(id) {
  * @return {Promise<User>}
  */
 function findByEmail(email) {
-  return User.query()
+  const user = User.query()
     .where('email', email)
     .first()
+
+  return user
 }
 
 function patchById(id, data) {

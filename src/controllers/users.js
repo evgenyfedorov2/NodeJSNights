@@ -18,6 +18,7 @@ async function signUp(ctx) {
     name: ctx.request.body.name,
     email: ctx.request.body.email,
     password: ctx.request.body.password,
+    disabled: ctx.request.body.disabled || false,
   }
   validate(schema.signUp, input)
   const user = await operations.signUp(input)

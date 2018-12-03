@@ -38,6 +38,22 @@ describe('Users', () => {
         'id',
         'accessToken',
       ])
+
+      const resp = await request(app)
+        .post('/session/user')
+        .send({
+          ...userData,
+          password: '11111111',
+        })
+        .expect(200)
+
+      const response = await request(app)
+        .post('/session/user')
+        .send({
+          ...userData,
+          password: '111111112',
+        })
+        .expect(401)
     })
 
     it('responds with error when not all required attributes are in body', async () => {
@@ -47,6 +63,21 @@ describe('Users', () => {
         .expect(400)
 
       expect(res.body).includes.keys([
+        'message',
+        'type',
+      ])
+    })
+
+    it('response with error when trying to login with non-existent user', async () => {
+      const resp = await request(app)
+        .post('/session/user')
+        .send({
+          ...userData,
+          password: '11111111',
+        })
+        .expect(401)
+
+      expect(resp.body).includes.keys([
         'message',
         'type',
       ])

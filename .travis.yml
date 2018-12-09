@@ -30,15 +30,13 @@ deploy:
   matrix:
   - provider: heroku
     skip_cleanup: true
-    api_key:
-      secure: ''
     app: nodejs-nights
     strategy: git
     on:
       branch:
       - master
       repo: evgenyfedorov2/NodeJSNights
-  api_key:
-    secure: FPVfPQCJeP+0vx4nloILo0oTFTX+bmXsDlrhAJcOmS2NSHo0dzT4bTh1xTXkTzLQNTUT+yhZ+CdIU4mlXqF+5uM6KGca0p1HXwPkYbK9R29aswskM6TSIs8cPADrwmdJ4XJu2Db33Ji3PiNH2KV74Cd6tsnUNKKBapfD36jX+/puAqnJsloPt5nQlLoN5L2U2C1IGNu7m3UGzu1GYuORqZN5ORDRrlIrRd/5I68GkTSeWzIGB95w4+IZUIt2WqaN9M1yna+YZ/qcvIgJuE6QqTsOwMBGi0JDleqs/egZo2/8AGnif7M+l8zFr4PJ30renJ35mCBSUkbXsEiBA+qkbVzsrmNVDyJBEZSf/x9+/KqblfWGItACk33Wu7ZebcJ5P0YUBFZsNY6IYWYLdDW+NgKEtLEVGqbrRNaEICjn/Ie8H7mgx92bKuSLcD3EQRnRBfcEeWrMwJG0NiqmnbZH1mSa7feCRNH/JVKFWSn//hsdoUG9qiM0N/iQREUO6kjl6Yl55JUWAr7guvZL4oIsssFx3ucxG0BVa5bMIf4J3zXtUgToU61hBKoOyOdaHHonXZfemfxzbQ2lnFks0O3QxTfdt7/0S7+NXlYq2vlepx1E57Lyngtjhnrnx9GKaQZx/IhHbkEuLiRc+kwHyQmVhmdN+QthGLPhmBX1Bk/t6uo=
+    api_key:
+      secure: FPVfPQCJeP+0vx4nloILo0oTFTX+bmXsDlrhAJcOmS2NSHo0dzT4bTh1xTXkTzLQNTUT+yhZ+CdIU4mlXqF+5uM6KGca0p1HXwPkYbK9R29aswskM6TSIs8cPADrwmdJ4XJu2Db33Ji3PiNH2KV74Cd6tsnUNKKBapfD36jX+/puAqnJsloPt5nQlLoN5L2U2C1IGNu7m3UGzu1GYuORqZN5ORDRrlIrRd/5I68GkTSeWzIGB95w4+IZUIt2WqaN9M1yna+YZ/qcvIgJuE6QqTsOwMBGi0JDleqs/egZo2/8AGnif7M+l8zFr4PJ30renJ35mCBSUkbXsEiBA+qkbVzsrmNVDyJBEZSf/x9+/KqblfWGItACk33Wu7ZebcJ5P0YUBFZsNY6IYWYLdDW+NgKEtLEVGqbrRNaEICjn/Ie8H7mgx92bKuSLcD3EQRnRBfcEeWrMwJG0NiqmnbZH1mSa7feCRNH/JVKFWSn//hsdoUG9qiM0N/iQREUO6kjl6Yl55JUWAr7guvZL4oIsssFx3ucxG0BVa5bMIf4J3zXtUgToU61hBKoOyOdaHHonXZfemfxzbQ2lnFks0O3QxTfdt7/0S7+NXlYq2vlepx1E57Lyngtjhnrnx9GKaQZx/IhHbkEuLiRc+kwHyQmVhmdN+QthGLPhmBX1Bk/t6uo=
 notifications:
   email: false

@@ -27,7 +27,6 @@ script:
 after_success:
 - "echo Upload code coverage \U0001F4AA"
 deploy:
-  matrix:
   - provider: heroku
     skip_cleanup: true
     app: nodejs-nights
